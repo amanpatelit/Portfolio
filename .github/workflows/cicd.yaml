@@ -1,0 +1,54 @@
+name: Deploy Static Website to S3
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment on push to main branch
+
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: us-east-2
+  S3_BUCKET: ${{ secrets.S3_BUCKET }}
+  CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+
+jobs:
+  deploy:
+    name: Deploy to AWS S3
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # Step 1: Clean existing S3 bucket contents
+      - name: Clear existing S3 content
+        run: |
+          echo "Deleting old files from S3 bucket: $S3_BUCKET"
+          aws s3 rm s3://$S3_BUCKET --recursive
+
+      # Step 2: Deploy new static website files
+      - name: Upload new website files to S3
+        run: |
+          echo "Uploading new files to $S3_BUCKET."
+          aws s3 sync . s3://$S3_BUCKET \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --cache-control "max-age=31536000,public"
+
+      # Step 3: Invalidate CloudFront cache
+      - name: Invalidate CloudFront Cache
+        if: always()
+        run: |
+          echo "Invalidating CloudFront cache for $CLOUDFRONT_DISTRIBUTION_ID."
+          aws cloudfront create-invalidation \
+            --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+            --paths "/*"
