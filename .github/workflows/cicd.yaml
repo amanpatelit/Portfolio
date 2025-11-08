@@ -11,8 +11,8 @@ jobs:
 
     env:
       AWS_REGION: ap-south-1             
-      S3_BUCKET: ${{ vars.S3_BUCKET_NAME }} 
-      CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.CLOUDFRONT_ID }}
+      S3_BUCKET: ${{ secrets.S3_BUCKET}} 
+      CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_ID }}
 
     steps:
       #Step 1: Checkout code
