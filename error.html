@@ -3,46 +3,159 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 - Page Not Found</title>
+  <title>Error - AmanOps Cloud</title>
   <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #ebf8ff, #e0f2fe, #f0f9ff);
+      --text-color: #1e293b;
+      --primary: #0ea5e9;
+      --secondary: #38bdf8;
+      --shadow: rgba(56, 189, 248, 0.2);
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --border: rgba(14, 165, 233, 0.1);
+    }
+
     body {
-      background: #0f172a;
-      color: #e2e8f0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-gradient);
       text-align: center;
+      color: var(--text-color);
+      overflow: hidden;
     }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 24px var(--shadow);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 50px 60px;
+      max-width: 520px;
+      margin: 0 20px;
+      position: relative;
+      z-index: 2;
+      animation: fadeIn 1s ease;
+    }
+
     h1 {
       font-size: 5rem;
-      margin-bottom: 0.5rem;
-      color: #38bdf8;
+      font-weight: 700;
+      background: -webkit-linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      line-height: 1;
     }
+
+    h2 {
+      font-size: 1.8rem;
+      margin: 10px 0;
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
     p {
-      font-size: 1.3rem;
-      max-width: 500px;
+      font-size: 1rem;
+      color: #475569;
+      line-height: 1.6;
+      margin: 1rem 0 2rem;
     }
+
     a {
-      margin-top: 1.5rem;
       text-decoration: none;
-      background: #38bdf8;
-      color: #0f172a;
-      padding: 10px 20px;
-      border-radius: 6px;
-      transition: all 0.2s ease;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 6px 16px var(--shadow);
+      transition: all 0.3s ease;
     }
+
     a:hover {
-      background: #0ea5e9;
+      background: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 12px;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    /* Animated cloud shapes */
+    .background-clouds {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    .cloud {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 40px 40px 80px rgba(14, 165, 233, 0.1);
+      animation: float 60s linear infinite;
+    }
+
+    .cloud:nth-child(1) {
+      width: 200px;
+      height: 100px;
+      top: 15%;
+      left: -250px;
+      animation-delay: 0s;
+    }
+    .cloud:nth-child(2) {
+      width: 250px;
+      height: 120px;
+      top: 55%;
+      left: -300px;
+      animation-delay: 25s;
+    }
+    .cloud:nth-child(3) {
+      width: 180px;
+      height: 90px;
+      top: 75%;
+      left: -220px;
+      animation-delay: 50s;
+    }
+
+    @keyframes float {
+      from { transform: translateX(0); }
+      to { transform: translateX(130vw); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <h1>404</h1>
-  <p>Oops! The page you’re looking for doesn’t exist or may have been moved.</p>
-  <a href="/">Go Back Home</a>
+  <div class="background-clouds">
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+  </div>
+
+  <div class="card">
+    <h1>404</h1>
+    <h2>Page Not Found</h2>
+    <p>Sorry, we can’t find the page you’re looking for.<br>
+        It may have been moved or removed altogether. Please try searching for some other page, or return to the website's homepage to find what you're looking for.</p>
+    <a href="/">← Back to Home</a>
+  </div>
+
+  <footer>© 2025 amansdlc.com. All rights reserved.</footer>
 </body>
 </html>
